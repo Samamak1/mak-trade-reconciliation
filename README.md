@@ -10,18 +10,18 @@ Author: Sama Mushtaq
 A small but complete reconciliation pipeline of the kind that sits between
 an internal order management system and counterparty confirmations:
 
-1. **Generate** — a seeded generator produces an internal trade set and a
+1. **Generate** - a seeded generator produces an internal trade set and a
    counterparty trade set (equities, listed options, FX) in SQLite, and
    injects breaks (price, quantity, settlement date, missing trades) at
    configurable rates. Every injected break is written to a ground-truth
    table, so the matcher can be audited against what was actually broken.
-2. **Match** — field-level comparison keyed on external ID, with per-field
+2. **Match** - field-level comparison keyed on external ID, with per-field
    tolerances defined in one frozen dataclass. Unmatched trades are detected
    in both directions. Each break gets a severity tier (CRITICAL / HIGH /
    MEDIUM / LOW) under a documented, tested policy.
-3. **Report** — exceptions to CSV, JSON (with summary counts), and a
+3. **Report** - exceptions to CSV, JSON (with summary counts), and a
    plain-text summary table.
-4. **Triage (optional)** — a deterministic rule-based classifier suggests a
+4. **Triage (optional)** - a deterministic rule-based classifier suggests a
    category and next action per break. If an `ANTHROPIC_API_KEY` or
    `GROQ_API_KEY` is present in the environment AND `--ai-triage` is passed,
    an LLM second opinion is used instead; every row is labeled with its
@@ -87,7 +87,7 @@ and without keys.
 
 - **Ground-truth injection.** Breaks are not just randomly sprinkled; each
   one is recorded, so `tests/test_generate_trades.py` can assert the
-  matcher finds exactly the injected set — no more, no less.
+  matcher finds exactly the injected set - no more, no less.
 - **One tolerance config object.** A run is reproducible from
   (seed, trade count, `ToleranceConfig`, `InjectionConfig`) alone.
 - **Price breaks require breaching both absolute and relative tolerance**,
